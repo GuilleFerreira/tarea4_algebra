@@ -5,9 +5,11 @@ import matplotlib.pyplot as plt
 ruta_imagen = 'imagenes/ardilla.jpg'
 
 # ==========================================================================
-#                                APLICACIÓN I
+#                 CÓDIGO APLICACIÓN I - Transformaciones
 # ==========================================================================
 
+# --------------------------------------------------
+# ESCALAR IMAGEN 
 def escalar_imagen(ruta_imagen, factor_x, factor_y):
     imagen = cv2.imread(ruta_imagen)
 
@@ -35,7 +37,10 @@ def escalar_imagen(ruta_imagen, factor_x, factor_y):
     plt.imshow(imagen_escalada)
     
     plt.show()
+    return
 
+# ---------------------------------------------
+# ROTAR IMAGEN 
 def rotar_imagen(ruta_imagen, angulo_rotacion):
     imagen = cv2.imread(ruta_imagen)
 
@@ -60,8 +65,10 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
     plt.imshow(imagen_rotada)
 
     plt.show()
+    return
 
-
+# ---------------------------------------------------
+# DEFORMAR IMAGEN 
 def deformar_imagen(ruta_imagen, factor_x, factor_y):
     imagen = cv2.imread(ruta_imagen)
 
@@ -84,11 +91,14 @@ def deformar_imagen(ruta_imagen, factor_x, factor_y):
     plt.imshow(imagen_deformada)
 
     plt.show()
+    return
 
 # ==========================================================================
-#                               APLICACIÓN II
+#               CÓDIGO APLICACIÓN II - Compresión de Imagenes
 # ==========================================================================
 
+# -----------------------------------
+# COMPRIMIR IMAGEN 
 def comprimir_imagen(ruta_imagen, k):
     imagen_original = cv2.imread(ruta_imagen, cv2.IMREAD_GRAYSCALE)
 
@@ -107,14 +117,15 @@ def comprimir_imagen(ruta_imagen, k):
     plt.imshow(imagen_original, cmap='gray')
     
     plt.subplot(1, 2, 2)
-    plt.title(f'Imagen Comprimida (k={k})')
+    plt.title(f'Imagen Comprimida\n(k={k})')
     plt.imshow(imagen_comprimida, cmap='gray')
 
     plt.show()
+    return
 
 
 # ==========================================================================
-#                                APLICACIÓN I
+#                 EJECUTAR APLICACIÓN I - Transformaciones
 # ==========================================================================
 
 # ROTAR
@@ -146,10 +157,10 @@ deformar_imagen(ruta_imagen, deformar_factor_x, deformar_factor_y)
 
 
 # ==========================================================================
-#                                APLICACIÓN II
+#              EJECUTAR APLICACIÓN II - Compresión de Imagenes
 # ==========================================================================
 
-
+# COMPRIMIR IMAGEN
 comprimir_imagen(ruta_imagen, 10)
 comprimir_imagen(ruta_imagen, 50)
 comprimir_imagen(ruta_imagen, 70)
