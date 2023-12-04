@@ -20,9 +20,9 @@ def escalar_imagen(ruta_imagen, factor_x, factor_y):
     escalada_alto = int(alto * factor_y)
     escalada_ancho = int(ancho * factor_x)
 
-    scaling_matrix = np.array([[factor_x, 0, 0], [0, factor_y, 0]])
+    matriz_escalado = np.array([[factor_x, 0, 0], [0, factor_y, 0]])
 
-    imagen_escalada = cv2.warpAffine(imagen_rgb, scaling_matrix, (escalada_ancho, escalada_alto))
+    imagen_escalada = cv2.warpAffine(imagen_rgb, matriz_escalado, (escalada_ancho, escalada_alto))
 
     nuevo_alto, nuevo_ancho, _ = imagen_escalada.shape
 
@@ -50,9 +50,9 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
 
     centro = (ancho // 2, alto // 2)
 
-    rotation_matrix = cv2.getRotationMatrix2D(centro, angulo_rotacion, 1.0)
+    matriz_rotacion = cv2.getRotationMatrix2D(centro, angulo_rotacion, 1.0)
 
-    imagen_rotada = cv2.warpAffine(imagen_rgb, rotation_matrix, (ancho, alto))
+    imagen_rotada = cv2.warpAffine(imagen_rgb, matriz_rotacion, (ancho, alto))
 
     plt.figure(figsize=(10, 5),num=f'Aplicacion I - Rotar Imagen')
 
@@ -76,9 +76,9 @@ def deformar_imagen(ruta_imagen, factor_x, factor_y):
 
     alto, ancho, _ = imagen.shape
 
-    shear_matrix = np.array([[1, factor_x, 0], [factor_y, 1, 0]])
+    matriz_deformado = np.array([[1, factor_x, 0], [factor_y, 1, 0]])
 
-    imagen_deformada = cv2.warpAffine(imagen_rgb, shear_matrix, (ancho, alto))
+    imagen_deformada = cv2.warpAffine(imagen_rgb, matriz_deformado, (ancho, alto))
 
     plt.figure(figsize=(10, 5),num=f'Aplicacion I - Deformar Imagen')
 
