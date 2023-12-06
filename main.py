@@ -4,6 +4,25 @@ import matplotlib.pyplot as plt
 
 ruta_imagen = 'imagenes/ardilla.jpg'
 
+# MOSTRAR IMAGENES
+def mostrar_imagenes(titulo_ventana,img_original,titulo_img_modificada,img_modificada,tamano="no"):
+    titulo_original = 'Imagen Original'
+    if tamano == "si":
+        alto, ancho, _ = img_original.shape
+        titulo_original += f'\nTamaño {ancho}x{alto}px'
+    plt.figure(figsize=(10, 5),num=titulo_ventana)
+
+    plt.subplot(1, 2, 1)
+    plt.title(titulo_original)
+    plt.imshow(img_original)
+
+    plt.subplot(1, 2, 2)
+    plt.title(titulo_img_modificada)
+    plt.imshow(img_modificada)
+    
+    plt.show()
+    return
+
 # ==========================================================================
 #                 CÓDIGO APLICACIÓN I - Transformaciones
 # ==========================================================================
@@ -13,7 +32,7 @@ ruta_imagen = 'imagenes/ardilla.jpg'
 def escalar_imagen(ruta_imagen, factor_x, factor_y):
     imagen = cv2.imread(ruta_imagen)
 
-    imagen_rgb = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
+    imagen_original = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
 
     alto, ancho, _ = imagen.shape
 
@@ -22,21 +41,14 @@ def escalar_imagen(ruta_imagen, factor_x, factor_y):
 
     matriz_escalado = np.array([[factor_x, 0, 0], [0, factor_y, 0]])
 
-    imagen_escalada = cv2.warpAffine(imagen_rgb, matriz_escalado, (escalada_ancho, escalada_alto))
+    imagen_escalada = cv2.warpAffine(imagen_original, matriz_escalado, (escalada_ancho, escalada_alto))
 
     nuevo_alto, nuevo_ancho, _ = imagen_escalada.shape
 
-    plt.figure(figsize=(10, 5),num=f'Aplicacion I - Escalar Imagen')
+    titulo_ventana = 'Aplicacion I - Escalar Imagen'
+    titulo_img_modificada = f'Imagen Escalada (Factor X: {factor_x}, Factor Y: {factor_y})\nTamaño {nuevo_ancho}x{nuevo_alto}px'
 
-    plt.subplot(1, 2, 1)
-    plt.title(f'Imagen Original\nTamaño {alto}x{ancho}px')
-    plt.imshow(imagen_rgb)
-
-    plt.subplot(1, 2, 2)
-    plt.title(f'Imagen Escalada (Factor X: {factor_x}, Factor Y: {factor_y})\nTamaño {nuevo_alto}x{nuevo_ancho}px')
-    plt.imshow(imagen_escalada)
-    
-    plt.show()
+    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_escalada,tamano="si")
     return
 
 # ---------------------------------------------
@@ -44,7 +56,7 @@ def escalar_imagen(ruta_imagen, factor_x, factor_y):
 def rotar_imagen(ruta_imagen, angulo_rotacion):
     imagen = cv2.imread(ruta_imagen)
 
-    imagen_rgb = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
+    imagen_original = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
 
     alto, ancho, _ = imagen.shape
 
@@ -52,19 +64,12 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
 
     matriz_rotacion = cv2.getRotationMatrix2D(centro, angulo_rotacion, 1.0)
 
-    imagen_rotada = cv2.warpAffine(imagen_rgb, matriz_rotacion, (ancho, alto))
+    imagen_rotada = cv2.warpAffine(imagen_original, matriz_rotacion, (ancho, alto))
 
-    plt.figure(figsize=(10, 5),num=f'Aplicacion I - Rotar Imagen')
+    titulo_ventana = 'Aplicacion I - Rotar Imagen'
+    titulo_img_modificada = f'Imagen Rotada\n(Ángulo: {angulo_rotacion} grados)'
 
-    plt.subplot(1, 2, 1)
-    plt.title('Imagen Original')
-    plt.imshow(imagen_rgb)
-    
-    plt.subplot(1, 2, 2)
-    plt.title(f'Imagen Rotada\n(Ángulo: {angulo_rotacion} grados)')
-    plt.imshow(imagen_rotada)
-
-    plt.show()
+    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_rotada)
     return
 
 # ---------------------------------------------------
@@ -72,25 +77,18 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
 def deformar_imagen(ruta_imagen, factor_x, factor_y):
     imagen = cv2.imread(ruta_imagen)
 
-    imagen_rgb = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
+    imagen_original = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
 
     alto, ancho, _ = imagen.shape
 
     matriz_deformado = np.array([[1, factor_x, 0], [factor_y, 1, 0]])
 
-    imagen_deformada = cv2.warpAffine(imagen_rgb, matriz_deformado, (ancho, alto))
+    imagen_deformada = cv2.warpAffine(imagen_original, matriz_deformado, (ancho, alto))
 
-    plt.figure(figsize=(10, 5),num=f'Aplicacion I - Deformar Imagen')
+    titulo_ventana = 'Aplicacion I - Deformar Imagen'
+    titulo_img_modificada = f'Imagen Deformada\n(Factor X: {factor_x}, Factor Y: {factor_y})'
 
-    plt.subplot(1, 2, 1)
-    plt.title('Imagen Original')
-    plt.imshow(imagen_rgb)
-   
-    plt.subplot(1, 2, 2)
-    plt.title(f'Imagen Deformada\n(Factor X: {factor_x}, Factor Y: {factor_y})')
-    plt.imshow(imagen_deformada)
-
-    plt.show()
+    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_deformada)
     return
 
 # ==========================================================================
@@ -126,17 +124,10 @@ def comprimir_imagen(ruta_imagen, k):
     imagen_comprimida = np.stack([canal_rojo_comprimido, canal_verde_comprimido, canal_azul_comprimido], axis=-1)
     imagen_comprimida = cv2.cvtColor(imagen_comprimida.astype(np.uint8), cv2.COLOR_BGR2RGB)
 
-    plt.figure(figsize=(10, 5), num=f'Aplicacion II - Comprimir Imagen')
+    titulo_ventana = 'Aplicacion II - Comprimir Imagen'
+    titulo_img_modificada = f'Imagen Comprimida\n(k={k})'
 
-    plt.subplot(1, 2, 1)
-    plt.title('Imagen Original')
-    plt.imshow(imagen_original)
-
-    plt.subplot(1, 2, 2)
-    plt.title(f'Imagen Comprimida\n(k={k})')
-    plt.imshow(imagen_comprimida)
-
-    plt.show()
+    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_comprimida)
     return
 
 
