@@ -143,7 +143,7 @@ def comprimir_imagen(ruta_imagen, k):
 # ==========================================================================
 #                 EJECUTAR APLICACIÓN I - Transformaciones
 # ==========================================================================
-"""
+
 # ROTAR
 angulo_rotacion = 45
 rotar_imagen(ruta_imagen, angulo_rotacion)
@@ -170,7 +170,7 @@ deformar_imagen(ruta_imagen, deformar_factor_x, deformar_factor_y)
 deformar_factor_x = 0.1
 deformar_factor_y = 0.9
 deformar_imagen(ruta_imagen, deformar_factor_x, deformar_factor_y)
-"""
+
 
 # ==========================================================================
 #              EJECUTAR APLICACIÓN II - Compresión de Imagenes
