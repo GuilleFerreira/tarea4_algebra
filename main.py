@@ -98,27 +98,43 @@ def deformar_imagen(ruta_imagen, factor_x, factor_y):
 # ==========================================================================
 
 # -----------------------------------
-# COMPRIMIR IMAGEN 
+# COMPRIMIR IMAGEN
 def comprimir_imagen(ruta_imagen, k):
-    imagen_original = cv2.imread(ruta_imagen, cv2.IMREAD_GRAYSCALE)
+    imagen = cv2.imread(ruta_imagen)
+    imagen_original = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
 
-    U, S, VT = np.linalg.svd(imagen_original, full_matrices=False)
+    imagen_para_comprimir = cv2.imread(ruta_imagen, cv2.IMREAD_COLOR)
 
+    U, S, VT = np.linalg.svd(imagen_para_comprimir[:, :, 0], full_matrices=False)  # Canal Rojo
     U_k = U[:, :k]
     S_k = np.diag(S[:k])
     VT_k = VT[:k, :]
+    canal_rojo_comprimido = np.dot(U_k, np.dot(S_k, VT_k))
 
-    imagen_comprimida = np.dot(U_k, np.dot(S_k, VT_k))
+    U, S, VT = np.linalg.svd(imagen_para_comprimir[:, :, 1], full_matrices=False)  # Canal Verde
+    U_k = U[:, :k]
+    S_k = np.diag(S[:k])
+    VT_k = VT[:k, :]
+    canal_verde_comprimido = np.dot(U_k, np.dot(S_k, VT_k))
 
-    plt.figure(figsize=(10, 5),num=f'Aplicacion II - Comprimir Imagen')
+    U, S, VT = np.linalg.svd(imagen_para_comprimir[:, :, 2], full_matrices=False)  # Canal Azul
+    U_k = U[:, :k]
+    S_k = np.diag(S[:k])
+    VT_k = VT[:k, :]
+    canal_azul_comprimido = np.dot(U_k, np.dot(S_k, VT_k))
+
+    imagen_comprimida = np.stack([canal_rojo_comprimido, canal_verde_comprimido, canal_azul_comprimido], axis=-1)
+    imagen_comprimida = cv2.cvtColor(imagen_comprimida.astype(np.uint8), cv2.COLOR_BGR2RGB)
+
+    plt.figure(figsize=(10, 5), num=f'Aplicacion II - Comprimir Imagen')
 
     plt.subplot(1, 2, 1)
     plt.title('Imagen Original')
-    plt.imshow(imagen_original, cmap='gray')
-    
+    plt.imshow(imagen_original)
+
     plt.subplot(1, 2, 2)
     plt.title(f'Imagen Comprimida\n(k={k})')
-    plt.imshow(imagen_comprimida, cmap='gray')
+    plt.imshow(imagen_comprimida)
 
     plt.show()
     return
@@ -127,7 +143,7 @@ def comprimir_imagen(ruta_imagen, k):
 # ==========================================================================
 #                 EJECUTAR APLICACIÓN I - Transformaciones
 # ==========================================================================
-
+"""
 # ROTAR
 angulo_rotacion = 45
 rotar_imagen(ruta_imagen, angulo_rotacion)
@@ -154,7 +170,7 @@ deformar_imagen(ruta_imagen, deformar_factor_x, deformar_factor_y)
 deformar_factor_x = 0.1
 deformar_factor_y = 0.9
 deformar_imagen(ruta_imagen, deformar_factor_x, deformar_factor_y)
-
+"""
 
 # ==========================================================================
 #              EJECUTAR APLICACIÓN II - Compresión de Imagenes
