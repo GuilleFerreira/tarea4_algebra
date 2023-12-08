@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 
 ruta_imagen = 'imagenes/ardilla.jpg'
 
+#--------------------------------------------------------------------------------------------------
 # MOSTRAR IMAGENES
-def mostrar_imagenes(titulo_ventana,img_original,titulo_img_modificada,img_modificada,tamano="no"):
+def mostrar_imagenes(titulo_ventana,img_original,titulo_img_modificada,img_modificada,tamano=False):
     titulo_original = 'Imagen Original'
-    if tamano == "si":
+
+    if tamano == True:
         alto, ancho, _ = img_original.shape
         titulo_original += f'\nTamaño {ancho}x{alto}px'
+
     plt.figure(figsize=(10, 5),num=titulo_ventana)
 
     plt.subplot(1, 2, 1)
@@ -47,8 +50,8 @@ def escalar_imagen(ruta_imagen, factor_x, factor_y):
 
     titulo_ventana = 'Aplicacion I - Escalar Imagen'
     titulo_img_modificada = f'Imagen Escalada (Factor X: {factor_x}, Factor Y: {factor_y})\nTamaño {nuevo_ancho}x{nuevo_alto}px'
+    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_escalada,tamano=True)
 
-    mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_escalada,tamano="si")
     return
 
 # ---------------------------------------------
@@ -68,8 +71,8 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
 
     titulo_ventana = 'Aplicacion I - Rotar Imagen'
     titulo_img_modificada = f'Imagen Rotada\n(Ángulo: {angulo_rotacion} grados)'
-
     mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_rotada)
+
     return
 
 # ---------------------------------------------------
@@ -87,8 +90,8 @@ def deformar_imagen(ruta_imagen, factor_x, factor_y):
 
     titulo_ventana = 'Aplicacion I - Deformar Imagen'
     titulo_img_modificada = f'Imagen Deformada\n(Factor X: {factor_x}, Factor Y: {factor_y})'
-
     mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_deformada)
+
     return
 
 # ==========================================================================
@@ -126,8 +129,8 @@ def comprimir_imagen(ruta_imagen, k):
 
     titulo_ventana = 'Aplicacion II - Comprimir Imagen'
     titulo_img_modificada = f'Imagen Comprimida\n(k={k})'
-
     mostrar_imagenes(titulo_ventana,imagen_original,titulo_img_modificada,imagen_comprimida)
+    
     return
 
 
