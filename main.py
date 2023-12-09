@@ -63,9 +63,14 @@ def rotar_imagen(ruta_imagen, angulo_rotacion):
 
     alto, ancho, _ = imagen.shape
 
+    angulo_rad = np.radians(angulo_rotacion)
+    cos_theta = np.cos(angulo_rad)
+    sin_theta = np.sin(angulo_rad)
+
     centro = (ancho // 2, alto // 2)
 
-    matriz_rotacion = cv2.getRotationMatrix2D(centro, angulo_rotacion, 1.0)
+    matriz_rotacion = np.array([[cos_theta, -sin_theta, centro[0] - centro[0]*cos_theta + centro[1]*sin_theta],
+                                [sin_theta, cos_theta, centro[1] - centro[0]*sin_theta - centro[1]*cos_theta]])
 
     imagen_rotada = cv2.warpAffine(imagen_original, matriz_rotacion, (ancho, alto))
 
@@ -139,10 +144,10 @@ def comprimir_imagen(ruta_imagen, k):
 # ==========================================================================
 
 # ROTAR
-angulo_rotacion = 45
+angulo_rotacion = -45
 rotar_imagen(ruta_imagen, angulo_rotacion)
 
-angulo_rotacion = 69
+angulo_rotacion = -69
 rotar_imagen(ruta_imagen, angulo_rotacion)
 
 
